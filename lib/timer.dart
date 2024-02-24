@@ -81,25 +81,24 @@ class _TimerAppState extends State<TimerApp> {
   }
 
   void resetTimer() {
-    if (_timer.isActive) {
+    print('resetTimer');
+
+    setState(() {
       _timer.cancel();
-    } else {
-      setState(() {
-        _hours = int.tryParse(_hoursController.text) ?? 0;
-        _minutes = int.tryParse(_minutesController.text) ?? 0;
-        _seconds = int.tryParse(_secondsController.text) ?? 0;
+      _hours = int.tryParse(_hoursController.text) ?? 0;
+      _minutes = int.tryParse(_minutesController.text) ?? 0;
+      _seconds = int.tryParse(_secondsController.text) ?? 0;
 
-        // Validate input ranges
-        _hours = _hours.clamp(0, 99);
-        _minutes = _minutes.clamp(0, 59);
-        _seconds = _seconds.clamp(0, 59);
+      // Validate input ranges
+      _hours = _hours.clamp(0, 99);
+      _minutes = _minutes.clamp(0, 59);
+      _seconds = _seconds.clamp(0, 59);
 
-        // Update controllers to reflect clamped values
-        _hoursController.text = _hours.toString();
-        _minutesController.text = _minutes.toString();
-        _secondsController.text = _seconds.toString();
-      });
-    }
+      // Update controllers to reflect clamped values
+      _hoursController.text = _hours.toString();
+      _minutesController.text = _minutes.toString();
+      _secondsController.text = _seconds.toString();
+    });
   }
 
   @override
@@ -166,14 +165,6 @@ class _TimerAppState extends State<TimerApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // ElevatedButton(
-                //   onPressed: stopTimer,
-                //   child: const Text('Stop Timer'),
-                // ),
-                // ElevatedButton(
-                //   onPressed: startTimer,
-                //   child: const Text('Start Timer'),
-                // ),
                 isButtonVisible
                     ? ElevatedButton(
                         onPressed: () {
@@ -189,7 +180,6 @@ class _TimerAppState extends State<TimerApp> {
                         },
                         child: const Text('Stop Timer'),
                       ),
-
                 ElevatedButton(
                   onPressed: () {
                     resetTimer();
@@ -204,15 +194,19 @@ class _TimerAppState extends State<TimerApp> {
               'Time remaining: $_hours hours $_minutes minutes $_seconds seconds',
               style: const TextStyle(fontSize: 24),
             ),
-            isButtonVisible
-                ? ElevatedButton(
-                    onPressed: () => _onButtonPressed('1'),
-                    child: Text('Кнопка 1'),
-                  )
-                : ElevatedButton(
-                    onPressed: () => _onButtonPressed('2'),
-                    child: Text('Кнопка 2'),
-                  ),
+            const SizedBox(height: 30),
+            // Circular progress indicator
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: CircularProgressIndicator(
+                value: ((_hours * 3600 + _minutes * 60 + _seconds) /
+                    ((double.tryParse(_hoursController.text) ?? 0) * 3600 +
+                        (double.tryParse(_minutesController.text) ?? 0) * 60 +
+                        (double.tryParse(_secondsController.text) ?? 0))),
+                strokeWidth: 55.0, // Adjust the value as needed
+              ),
+            ),
           ],
         ),
       ),
