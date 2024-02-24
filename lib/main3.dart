@@ -263,8 +263,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Time remaining: $_hours hours $_minutes minutes $_seconds seconds',
-                    style: const TextStyle(fontSize: 24),
+                    '$_hours : $_minutes : $_seconds',
+                    style: const TextStyle(fontSize: 42),
                   ),
                   const SizedBox(height: 30),
                   // Circular progress indicator
