@@ -280,12 +280,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
-            // Content of Tab 2
+            // Content of Stopwatch
             const Center(
 
             ),
 
-            // Content of Tab 3
+            // Content of Metronome
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -301,7 +301,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            // Content of Tab 4
+
+            // Content of BMI
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
