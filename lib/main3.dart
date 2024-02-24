@@ -26,11 +26,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Separate states for each tab
-  String buttonTextTab1 = 'Press me';
-  String buttonTextTab2 = 'Press me';
-  String buttonTextTab3 = 'Press me';
-  String buttonTextTab4 = 'Press me';
+
 
   final TextEditingController _hoursController = TextEditingController();
   final TextEditingController _minutesController = TextEditingController();
@@ -108,23 +104,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void changeText(int tab) {
-    setState(() {
-      if (tab == 1) {
-        buttonTextTab1 =
-            (buttonTextTab1 == 'Press me') ? 'Clicked!' : 'Press me';
-      } else if (tab == 2) {
-        buttonTextTab2 =
-            (buttonTextTab2 == 'Press me') ? 'Clicked!' : 'Press me';
-      } else if (tab == 3) {
-        buttonTextTab3 =
-            (buttonTextTab3 == 'Press me') ? 'Clicked!' : 'Press me';
-      } else if (tab == 4) {
-        buttonTextTab4 =
-            (buttonTextTab4 == 'Press me') ? 'Clicked!' : 'Press me';
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -287,36 +266,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
             // Content of Metronome
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Tab 3 Content'),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      changeText(3);
-                    },
-                    child: Text(buttonTextTab3),
-                  ),
-                ],
-              ),
+
             ),
 
             // Content of BMI
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Tab 4 Content'),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      changeText(4);
-                    },
-                    child: Text(buttonTextTab4),
-                  ),
-                ],
-              ),
+
             ),
           ],
         ),
