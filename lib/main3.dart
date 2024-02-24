@@ -143,11 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 25, // set the required height
                   )
 
-                  // icon: SvgPicture.asset(
-                  //   "assets/clock.ico",
-                  //   width: 25, // set the required width
-                  //   height: 25, // set the required height
-                  // )
                   ),
               Tab(
                 text: "Stopwatch",
