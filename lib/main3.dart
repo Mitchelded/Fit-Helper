@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:io';
+
 void main() {
   runApp(const MyApp());
 }
@@ -59,30 +62,58 @@ class _MyHomePageState extends State<MyHomePage> {
           bottom: TabBar(
             tabs: [
               Tab(
-                text: "Timer",
-                // icon: Icon(Icons.image),
-                icon: Icon(
-                  CachedNetworkImage(
-                    imageUrl: 'https://example.com/icon1.png',
-                    width: 30,
-                    height: 30,
-                    placeholder: (context, url) => const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                  ) as IconData?,
-                ),
+                  text: "Timer",
+                  // icon:  Icon(Icons.image),
+                  // icon: Image.network(
+                  //   "https://icon-icons.com/downloadimage.php?id=123193&root=1993/SVG/&file=clock_hour_minute_second_time_timer_watch_icon_123193.svg",
+                  //   width: 25, // set the required width
+                  //   height: 25, // set the required height
+                  // ),
+                  // icon: SvgPicture.network(
+                  //   "https://icon-icons.com/downloadimage.php?id=123193&root=1993/SVG/&file=clock_hour_minute_second_time_timer_watch_icon_123193.svg",
+                  //   width: 25, // set the required width
+                  //   height: 25, // set the required height
+                  // )
+                  // icon: Image.network(
+                  //   "https://icon-icons.com/downloadimage.php?id=123193&root=1993/ICO/512/&file=clock_hour_minute_second_time_timer_watch_icon_123193.ico",
+                  //   width: 25, // set the required width
+                  //   height: 25, // set the required height
+                  // )
+                  icon: Image.asset(
+                    "assets/timer.ico",
+                    width: 25, // set the required width
+                    height: 25, // set the required height
+                  )
 
-              ),
-              const Tab(
+                  // icon: SvgPicture.asset(
+                  //   "assets/clock.ico",
+                  //   width: 25, // set the required width
+                  //   height: 25, // set the required height
+                  // )
+                  ),
+              Tab(
                 text: "Stopwatch",
-                icon: Icon(Icons.image),
+                icon: Image.asset(
+                  "assets/stopwatch.ico",
+                  width: 25, // set the required width
+                  height: 25, // set the required height
+                ),
               ),
-              const Tab(
+              Tab(
                 text: "Metronome",
-                icon: Icon(Icons.image),
+                icon: Image.asset(
+                  "assets/metronome.ico",
+                  width: 25, // set the required width
+                  height: 25, // set the required height
+                ),
               ),
-              const Tab(
+              Tab(
                 text: "BMI",
-                icon: Icon(Icons.image),
+                icon: Image.asset(
+                  "assets/scale.ico",
+                  width: 25, // set the required width
+                  height: 25, // set the required height
+                ),
               ),
             ],
           ),
