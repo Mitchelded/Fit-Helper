@@ -286,7 +286,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             // Content of Tab 2
-            Center(
+            const Center(
 
             ),
 
