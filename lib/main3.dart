@@ -30,6 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _minutesController = TextEditingController();
   final TextEditingController _secondsController = TextEditingController();
   late Timer _timer;
+  late Stopwatch _stopwatch;
+  bool _isStopwatchRunning = false;
   int _hours = 0;
   int _minutes = 0;
   int _seconds = 0;
@@ -38,6 +40,40 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _timer = Timer(Duration.zero, () {});
+    _stopwatch = Stopwatch();
+  }
+
+
+  void startStopwatch() {
+    print('startStopwatch');
+    _stopwatch.start();
+    setState(() {
+      _isStopwatchRunning = true;
+    });
+
+    // Schedule periodic updates to UI while stopwatch is running
+    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (!_isStopwatchRunning) {
+        timer.cancel(); // Stop the timer when the stopwatch is stopped
+      } else {
+        setState(() {}); // Update the UI every second
+      }
+    });
+  }
+
+
+  void stopStopwatch() {
+    print('stopStopwatch');
+    _stopwatch.stop();
+    setState(() {
+      _isStopwatchRunning = false;
+    });
+  }
+
+  void resetStopwatch() {
+    print('resetStopwatch');
+    _stopwatch.reset();
+    setState(() {});
   }
 
   bool isButtonVisible = true;
@@ -257,7 +293,39 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             // Content of Stopwatch
-            const Center(),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    '${_stopwatch.elapsed.inHours.toString().padLeft(2, '0')} : '
+                        '${(_stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0')} : '
+                        '${(_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0')}',
+                    style: const TextStyle(fontSize: 42),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          if (!_isStopwatchRunning) {
+                            startStopwatch();
+                          } else {
+                            stopStopwatch();
+                          }
+                        },
+                        child: Text(_isStopwatchRunning ? 'Stop Stopwatch' : 'Start Stopwatch'),
+                      ),
+                      ElevatedButton(
+                        onPressed: resetStopwatch,
+                        child: const Text('Reset Stopwatch'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
 
             // Content of Metronome
             Center(),
