@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fit_helper/metronome.dart';
 import 'package:fit_helper/timer.dart';
 import 'package:fit_helper/stopwatch.dart';
+import 'package:fit_helper/bmi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -116,25 +117,27 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             // Content of Timer
-            Center(
+            const Center(
               child: TimerApp(),
             ),
 
             // Content of Stopwatch
-            Center(
+            const Center(
               child: StopwatchApp(),
             ),
 
             // Content of Metronome
-            Center(
+            const Center(
               child: Metronome(),
             ),
 
             // Content of BMI
-            Center(),
+            Center(
+              child: BMICalculator(),
+            ),
           ],
         ),
       ),
