@@ -26,8 +26,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   final TextEditingController _hoursController = TextEditingController();
   final TextEditingController _minutesController = TextEditingController();
   final TextEditingController _secondsController = TextEditingController();
@@ -104,9 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
+    double denominator = (double.tryParse(_hoursController.text) ?? 0) * 3600 +
+        (double.tryParse(_minutesController.text) ?? 0) * 60 +
+        (double.tryParse(_secondsController.text) ?? 0);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -120,9 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "assets/timer.ico",
                     width: 25, // set the required width
                     height: 25, // set the required height
-                  )
-
-                  ),
+                  )),
               Tab(
                 text: "Stopwatch",
                 icon: Image.asset(
@@ -155,8 +153,27 @@ class _MyHomePageState extends State<MyHomePage> {
             // Content of Timer
             Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Text(
+                    '$_hours : $_minutes : $_seconds',
+                    style: const TextStyle(fontSize: 42),
+                  ),
+                  const SizedBox(height: 20),
+                  // Circular progress indicator
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: // Inside the CircularProgressIndicator widget
+                    CircularProgressIndicator(
+                      value: denominator != 0
+                          ? ((_hours * 3600 + _minutes * 60 + _seconds) /
+                          denominator)
+                          : 0,
+                      strokeWidth: 55.0, // Adjust the value as needed
+                    ),
+                  ),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -213,19 +230,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       isButtonVisible
                           ? ElevatedButton(
-                        onPressed: () {
-                          startTimer();
-                          _onButtonPressed("1");
-                        },
-                        child: const Text('Start Timer'),
-                      )
+                              onPressed: () {
+                                startTimer();
+                                _onButtonPressed("1");
+                              },
+                              child: const Text('Start Timer'),
+                            )
                           : ElevatedButton(
-                        onPressed: () {
-                          stopTimer();
-                          _onButtonPressed("2");
-                        },
-                        child: const Text('Stop Timer'),
-                      ),
+                              onPressed: () {
+                                stopTimer();
+                                _onButtonPressed("2");
+                              },
+                              child: const Text('Stop Timer'),
+                            ),
                       ElevatedButton(
                         onPressed: () {
                           resetTimer();
@@ -235,44 +252,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    '$_hours : $_minutes : $_seconds',
-                    style: const TextStyle(fontSize: 42),
-                  ),
-                  const SizedBox(height: 30),
-                  // Circular progress indicator
-                  SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: CircularProgressIndicator(
-                      value: ((_hours * 3600 + _minutes * 60 + _seconds) /
-                          ((double.tryParse(_hoursController.text) ?? 0) *
-                              3600 +
-                              (double.tryParse(_minutesController.text) ?? 0) *
-                                  60 +
-                              (double.tryParse(_secondsController.text) ?? 0))),
-                      strokeWidth: 55.0, // Adjust the value as needed
-                    ),
-                  ),
                 ],
               ),
             ),
 
             // Content of Stopwatch
-            const Center(
-
-            ),
+            const Center(),
 
             // Content of Metronome
-            Center(
-
-            ),
+            Center(),
 
             // Content of BMI
-            Center(
-
-            ),
+            Center(),
           ],
         ),
       ),
