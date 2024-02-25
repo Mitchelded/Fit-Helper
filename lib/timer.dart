@@ -1,21 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: TimerApp(),
-    );
-  }
-}
 
 class TimerApp extends StatefulWidget {
   const TimerApp({super.key});
@@ -103,14 +87,35 @@ class _TimerAppState extends State<TimerApp> {
 
   @override
   Widget build(BuildContext context) {
+    double denominator = (double.tryParse(_hoursController.text) ?? 0) * 3600 +
+        (double.tryParse(_minutesController.text) ?? 0) * 60 +
+        (double.tryParse(_secondsController.text) ?? 0);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Timer'),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Text(
+              '$_hours : $_minutes : $_seconds',
+              style: const TextStyle(fontSize: 42),
+            ),
+            const SizedBox(height: 20),
+            // Circular progress indicator
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: // Inside the CircularProgressIndicator widget
+              CircularProgressIndicator(
+                value: denominator != 0
+                    ? ((_hours * 3600 + _minutes * 60 + _seconds) /
+                    denominator)
+                    : 0,
+                strokeWidth: 55.0, // Adjust the value as needed
+              ),
+            ),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -167,19 +172,19 @@ class _TimerAppState extends State<TimerApp> {
               children: [
                 isButtonVisible
                     ? ElevatedButton(
-                        onPressed: () {
-                          startTimer();
-                          _onButtonPressed("1");
-                        },
-                        child: const Text('Start Timer'),
-                      )
+                  onPressed: () {
+                    startTimer();
+                    _onButtonPressed("1");
+                  },
+                  child: const Text('Start Timer'),
+                )
                     : ElevatedButton(
-                        onPressed: () {
-                          stopTimer();
-                          _onButtonPressed("2");
-                        },
-                        child: const Text('Stop Timer'),
-                      ),
+                  onPressed: () {
+                    stopTimer();
+                    _onButtonPressed("2");
+                  },
+                  child: const Text('Stop Timer'),
+                ),
                 ElevatedButton(
                   onPressed: () {
                     resetTimer();
@@ -188,24 +193,6 @@ class _TimerAppState extends State<TimerApp> {
                   child: const Text('Reset Timer'),
                 ),
               ],
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Time remaining: $_hours hours $_minutes minutes $_seconds seconds',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 30),
-            // Circular progress indicator
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: CircularProgressIndicator(
-                value: ((_hours * 3600 + _minutes * 60 + _seconds) /
-                    ((double.tryParse(_hoursController.text) ?? 0) * 3600 +
-                        (double.tryParse(_minutesController.text) ?? 0) * 60 +
-                        (double.tryParse(_secondsController.text) ?? 0))),
-                strokeWidth: 55.0, // Adjust the value as needed
-              ),
             ),
           ],
         ),
