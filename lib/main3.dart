@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:fit_helper/metronome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _stopwatch = Stopwatch();
   }
 
-
   void startStopwatch() {
     print('startStopwatch');
     _stopwatch.start();
@@ -52,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     // Schedule periodic updates to UI while stopwatch is running
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (!_isStopwatchRunning) {
         timer.cancel(); // Stop the timer when the stopwatch is stopped
       } else {
@@ -60,7 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
   }
-
 
   void stopStopwatch() {
     print('stopStopwatch');
@@ -201,10 +201,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 100,
                     height: 100,
                     child: // Inside the CircularProgressIndicator widget
-                    CircularProgressIndicator(
+                        CircularProgressIndicator(
                       value: denominator != 0
                           ? ((_hours * 3600 + _minutes * 60 + _seconds) /
-                          denominator)
+                              denominator)
                           : 0,
                       strokeWidth: 55.0, // Adjust the value as needed
                     ),
@@ -299,8 +299,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Text(
                     '${_stopwatch.elapsed.inHours.toString().padLeft(2, '0')} : '
-                        '${(_stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0')} : '
-                        '${(_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0')}',
+                    '${(_stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0')} : '
+                    '${(_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0')}',
                     style: const TextStyle(fontSize: 42),
                   ),
                   const SizedBox(height: 20),
@@ -315,7 +315,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             stopStopwatch();
                           }
                         },
-                        child: Text(_isStopwatchRunning ? 'Stop Stopwatch' : 'Start Stopwatch'),
+                        child: Text(_isStopwatchRunning
+                            ? 'Stop Stopwatch'
+                            : 'Start Stopwatch'),
                       ),
                       ElevatedButton(
                         onPressed: resetStopwatch,
@@ -328,7 +330,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             // Content of Metronome
-            Center(),
+            Center(
+              child: Metronome(),
+            ),
 
             // Content of BMI
             Center(),
